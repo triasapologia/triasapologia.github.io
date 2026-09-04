@@ -1,0 +1,328 @@
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(ellipse at center, #ded8cb 0%, #c8c1b4 100%);
+}
+
+/*
+    FIXED PAGE
+    The page is always 1000 × 600 internally.
+    On smaller screens the complete page scales uniformly.
+*/
+.book {
+    width: 1000px;
+    height: 600px;
+    flex: 0 0 1000px;
+    position: relative;
+    transform-origin: center center;
+    filter: drop-shadow(0 12px 16px rgba(58, 43, 25, .25));
+}
+
+.page {
+    width: 1000px;
+    height: 600px;
+    position: relative;
+    overflow: hidden;
+
+    background:
+        radial-gradient(ellipse at 17% 22%,
+            rgba(157, 104, 48, .10) 0 9%,
+            transparent 18%),
+        radial-gradient(ellipse at 82% 38%,
+            rgba(180, 122, 61, .10) 0 10%,
+            transparent 22%),
+        radial-gradient(ellipse at 46% 79%,
+            rgba(128, 79, 35, .09) 0 12%,
+            transparent 23%),
+
+        radial-gradient(circle at 30% 45%,
+            rgba(255,255,255,.42) 0 1px,
+            transparent 2px),
+        radial-gradient(circle at 70% 65%,
+            rgba(117,75,36,.10) 0 1px,
+            transparent 2px),
+
+        linear-gradient(108deg,
+            #e7cfa7 0%,
+            #f5dfb9 22%,
+            #eed5ac 48%,
+            #f6e1bd 72%,
+            #dfbf8f 100%);
+
+    box-shadow:
+        inset 0 0 24px rgba(108, 68, 27, .16),
+        inset 0 0 5px rgba(88, 54, 25, .32);
+}
+
+.page::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    opacity: .48;
+
+    background:
+        repeating-linear-gradient(
+            7deg,
+            transparent 0 6px,
+            rgba(111, 76, 38, .025) 7px,
+            transparent 8px 15px
+        ),
+        repeating-linear-gradient(
+            97deg,
+            transparent 0 9px,
+            rgba(255,255,255,.055) 10px,
+            transparent 11px 22px
+        );
+    mix-blend-mode: multiply;
+}
+
+.edge-top,
+.edge-bottom,
+.edge-left,
+.edge-right {
+    position: absolute;
+    z-index: 8;
+    pointer-events: none;
+}
+
+.edge-top {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 17px;
+    background:
+        linear-gradient(to bottom,
+            rgba(92,54,20,.48),
+            rgba(151,98,42,.20) 35%,
+            transparent 100%);
+    clip-path: polygon(
+        0 35%, 5% 48%, 11% 28%, 17% 43%, 23% 22%,
+        30% 45%, 37% 25%, 44% 47%, 52% 20%, 59% 42%,
+        66% 28%, 73% 48%, 80% 25%, 87% 44%, 94% 24%,
+        100% 40%, 100% 100%, 0 100%
+    );
+}
+
+.edge-bottom {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background: rgba(110, 68, 28, .20);
+    clip-path: polygon(
+        0 20%, 5% 38%, 12% 16%, 18% 48%, 26% 27%,
+        34% 42%, 43% 18%, 51% 40%, 60% 22%, 69% 46%,
+        78% 24%, 86% 39%, 94% 18%, 100% 31%,
+        100% 100%, 0 100%
+    );
+}
+
+.edge-left {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 15px;
+    background:
+        linear-gradient(to right,
+            rgba(92,54,20,.34),
+            rgba(156,103,47,.12),
+            transparent);
+    clip-path: polygon(
+        0 0, 100% 0, 78% 8%, 92% 17%, 70% 27%,
+        91% 37%, 69% 48%, 90% 59%, 72% 70%,
+        93% 82%, 67% 91%, 83% 100%, 0 100%
+    );
+}
+
+.edge-right {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 13px;
+    background:
+        linear-gradient(to left,
+            rgba(92,54,20,.40),
+            rgba(156,103,47,.12),
+            transparent);
+    clip-path: polygon(
+        100% 0, 0 0, 22% 9%, 7% 19%, 28% 29%,
+        8% 39%, 31% 49%, 9% 61%, 28% 71%,
+        6% 83%, 33% 93%, 17% 100%, 100% 100%
+    );
+}
+
+.crease {
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+    opacity: .22;
+}
+
+.crease.one {
+    width: 410px;
+    height: 2px;
+    top: 130px;
+    left: 65px;
+    transform: rotate(-7deg);
+    background: linear-gradient(
+        90deg, transparent, rgba(105,68,29,.5), transparent
+    );
+    box-shadow: 0 1px 5px rgba(255,255,255,.6);
+}
+
+.crease.two {
+    width: 360px;
+    height: 2px;
+    top: 370px;
+    left: 105px;
+    transform: rotate(5deg);
+    background: linear-gradient(
+        90deg, transparent, rgba(105,68,29,.38), transparent
+    );
+}
+
+.crease.three {
+    width: 2px;
+    height: 500px;
+    top: 55px;
+    left: 310px;
+    transform: rotate(10deg);
+    background: linear-gradient(
+        180deg, transparent, rgba(105,68,29,.24), transparent
+    );
+}
+
+/*
+    Page title
+    ------------------------------------------------------------
+    A restrained old-book heading: centered, slightly letter-spaced,
+    with a subtle ink underline. Edit "My Notes" directly in the HTML.
+*/
+.page-title {
+    position: absolute;
+    z-index: 5;
+    top: 32px;
+    left: 70px;
+    right: 70px;
+
+    text-align: center;
+    font-family: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+    font-size: 29px;
+    line-height: 34px;
+    font-weight: 600;
+    letter-spacing: .075em;
+    color: #3a2b1e;
+    text-transform: none;
+
+    text-shadow:
+        0 .4px rgba(255,255,255,.45),
+        0 .6px rgba(55,35,18,.18);
+
+    outline: none;
+    cursor: text;
+}
+
+.page-title::after {
+    content: "";
+    display: block;
+    width: 150px;
+    height: 1px;
+    margin: 5px auto 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(92,62,37,.55),
+        transparent
+    );
+}
+
+.page-title:focus {
+    text-shadow:
+        0 .4px rgba(255,255,255,.45),
+        0 .6px rgba(55,35,18,.25);
+}
+
+.rules {
+    position: absolute;
+    z-index: 3;
+    left: 18px;
+    right: 18px;
+    top: 108px;
+    height: 456px;
+}
+
+.rule {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(103, 73, 48, .42);
+}
+
+.note {
+    position: absolute;
+    z-index: 5;
+    left: 34px;
+    right: 27px;
+    top: 109px;
+
+    font-family: "EB Garamond", "Cormorant Garamond", Georgia, serif;
+    font-size: 19px;
+    line-height: 24px;
+    font-weight: 500;
+    letter-spacing: .005em;
+    color: #3d3024;
+    text-shadow: 0 .2px rgba(50,35,20,.20);
+}
+
+.note p {
+    margin: 0;
+    padding: 0;
+}
+
+.ink-mark {
+    position: absolute;
+    z-index: 4;
+    width: 7px;
+    height: 2px;
+    border-radius: 50%;
+    background: rgba(65, 43, 25, .42);
+    transform: rotate(-7deg);
+}
+
+.ink-mark.a { left: 176px; top: 390px; }
+.ink-mark.b { left: 265px; top: 405px; width: 4px; }
+.ink-mark.c { left: 70px; top: 440px; width: 3px; }
+
+@media screen {
+    .book {
+        /* JS supplies the scale. */
+    }
+}
+
+@media print {
+    html, body {
+        overflow: visible;
+        background: white;
+    }
+
+    .book {
+        transform: none !important;
+        filter: none;
+    }
+}
